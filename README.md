@@ -1,5 +1,14 @@
 # SSCPE
-This repository contains data used for calibrating and testing the Structure and stability constrained protein evolution substitution model computed by the program Prot_evol https://github.com/ugobas/Prot_evol
+This repository contains programs and data used for calibrating and testing the Structure and stability constrained protein evolution substitution model computed by the program Prot_evol https://github.com/ugobas/Prot_evol
+
+- SSCPE.zip : Program SSCPE_tree_RAxML.pl for computing phylogenetic trees using Structure and stability constrained substitution models of protein evolution (SSCPE, Lorca I, Arenas M and Bastolla U. 2022. Structure and stability constrained substitution models outperform traditional substitution models used for evolutionary inference. Submitted) and the RAxML-NG program (Kozlov AM, Darriba D, Flouri T, Morel B, Stamatakis A. 2019. RAxML-NG: a fast, scalable and user-friendly tool for maximum likelihood phylogenetic inference. Bioinformatics 35: 4453-4455).
+
+To install it, run the following:
+>unzip SSCPE.zip  -> It extracts the README where you can find more information
+>chmod u+x script_install_SSCPE.sh
+>./script_install_SSCPE.sh
+
+The script creates the folder BIN and installs there the RAxML executable by Kozlov et al. (16 bit, you can also download it from https://github.com/amkozlov/raxml-ng) and compiles and install the Prot_evol program (https://github.com/ugobas/Prot_evol) and the tnm program (https://github.com/ugobas/tnm)
 
 - Alignments.zip : Multiple sequence alignments including one PDB structure that gives name to the alignment. Courtesy of Julian Echave, Universidad Nacional de San Martin, Argentina. Input file to Prot_evol needed for computing the SSCPE models
 
@@ -10,6 +19,8 @@ This repository contains data used for calibrating and testing the Structure and
 - Rates.zip : Site-specific evolutionary rate, sequence entropy and hydrophobicity predicted by Prot_evol for every site of the tested proteins and number of contacts computed from the PDB structure
 
 - Summary.zip : Properties of the different SSCPE models averaged over sites for all test proteins: Log-likelihood of the MSA, sequence entropy, Kullback-Leibler divergences, average hydrophobicity, and global folding free energy DeltaG
+ 
+- Prot_evol_models.zip : 10 site-specific SSCPE substitution models used for testing the tree likelihood with the program RAxML-ng (Kozlov AM, Darriba D, Flouri T, Morel B, Stamatakis A. 2019. RAxML-NG: a fast, scalable and user-friendly tool for maximum likelihood phylogenetic inference. Bioinformatics 35: 4453-4455).
 
 - Input_Prot_evol.in : Sample input file to the program Prot_evol
 
