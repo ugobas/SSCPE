@@ -48,9 +48,9 @@ Maximum likelihood phylogenetic inference with selection on protein folding stab
 ## Usage:
 
 SSCPE.pl 
-	 -ali <MSA file> (FASTA)
-	 -pdblist <list of PDB files> line: pddbcode chain
-	 -pdb <single PDB file>
+	-ali <MSA file> (FASTA)
+ 	-pdblist <list of PDB files> line: pddbcode chain
+	-pdb <single PDB file>
 	 -chain <single PDB chain> (default: first chain)
 	 -pdbdir <path to PDB> (optional)
 	 -model <MOD> (allowed: MF WT DE RMSD DEWT RMSDWT DEMF RMSDMF default: ML)
