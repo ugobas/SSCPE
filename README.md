@@ -9,7 +9,7 @@ The ML trees may be inferred upon request through the program RAxML-NG (Kozlov e
 ### Installation: 
 
 You have to run the following on your computer:
-Download SSCPE.zip from  https://github.com/ugobas/SSCPE/SSCPE.zip
+Download SSCPE.zip from  https://github.com/ugobas/SSCPE/blob/main/SSCPE.zip 
 It is recommended to download SSCPE.zip in an empty folder called SSCPE
 Run the following:
 
