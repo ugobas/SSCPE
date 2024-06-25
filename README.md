@@ -73,9 +73,9 @@ SSCPE.pl
 
 10 sample PDB files and small MSA (5 sequences) are provided in the folders PDB/ and ALI/. You can run as an example one of the following
 
-SSCPE.pl -pdb PDB/1zio.pdb -msa ALI/1ZIO_A_mafft_reduced.fasta -raxml
+SSCPE.pl -pdb PDB/1zio.pdb -ali ALI/1ZIO_A_mafft_reduced.fasta -raxml
 
-SSCPE.pl -pdb PDB/1bp2.pdb -msa ALI/1BP2_A_mafft_reduced.fasta -raxml
+SSCPE.pl -pdb PDB/1bp2.pdb -ali ALI/1BP2_A_mafft_reduced.fasta -raxml
 
  ## Other programs
 
