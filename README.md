@@ -30,17 +30,17 @@ you can copy them to your PATH for easier use.
 
 ## Description of the program SSCPE.pl
 
-For a given multiple sequence alignment (MSA) and list of protein structures (PDB file) whose sequences have local identity >50% with a sequence present in the MSA, the program SSCPE.pl:
+For a given multiple sequence alignment (MSA) and list of protein structures (PDB file) whose sequences have local identity >50% with a sequence present in the MSA, the program `SSCPE.pl`:
 
-(1) runs the program Prot_evol (also available at https://github.com/ugobas/Prot_evol [1,7,8]) for predicting site-specific amino acid frequencies based on selection on protein structure conservation as predicted by the tnm program [9] and protein folding stability against unfolding and misfolding [6,7] for an input list of PDB structures and an MSA.
+(1) runs the program `Prot_evol` (also available at https://github.com/ugobas/Prot_evol [1,7,8]) for predicting site-specific amino acid frequencies based on selection on protein structure conservation as predicted by the `tnm` program [9] and protein folding stability against unfolding and misfolding [6,7] for an input list of PDB structures and an MSA.
 
-(2) Prot_evol internally runs the program tnm (Torsional Network Model [9], also available at https://github.com/ugobas/tnm) for predicting the structural deformation [8] (RMSD and energy barrier DE between the average structure of the wild-type and the mutant) that would be produced by each possible mutation. The results of these computations (<>.mut_RMSD.dat and <>.mut_DE.dat) are stored in the folder /TNM_DATA where they are looked for by Prot_evol and reused if present, unless the option -noreuse2 is set. TNM computations are slow for proteins with >500 residues (about 1h for 1000 residues) and they can be disabled with the option -nostr , but in this case the structure-constrained models RMSD and DE and the combined models RMSDWT, RMSDMF, DEWT, DEMF cannot be used;
+(2) Prot_evol internally runs the program `tnm` (Torsional Network Model [9], also available at https://github.com/ugobas/tnm) for predicting the structural deformation [8] (RMSD and energy barrier DE between the average structure of the wild-type and the mutant) that would be produced by each possible mutation. The results of these computations (<>.mut_RMSD.dat and <>.mut_DE.dat) are stored in the folder /TNM_DATA where they are looked for by `Prot_evol` and reused if present, unless the option `-noreuse2` is set. TNM computations are slow for proteins with >500 residues (about 1h for 1000 residues) and they can be disabled with the option `-nostr`, but in this case the structure-constrained models RMSD and DE and the combined models RMSDWT, RMSDMF, DEWT, DEMF cannot be used;
 
-(3) There are 3 possible binary options for the exchangeability matrix, amounting to 8 combinations: the Halpern-Bruno model of the fixation probability (default, it may be disabled with -noHB), the flux model that requires that each pair of amino acids has the same site-averaged flux as th empirical model (default, it may be disabled with the option -noflux), RAxML-NG internally normalizes the substitution rate at each site and SSCPE.pl undoes this normalization by providing as input the substitution rate computed by Prot_vol (default, it may be disabled with the option -rate 0). The empirical exchangeability matrix can be input (e.g. -matrix JTT) or it can be internally optimized by Prot_evol (default);
+(3) There are 3 possible binary options for the exchangeability matrix, amounting to 8 combinations: the Halpern-Bruno model of the fixation probability (default, it may be disabled with `-noHB`), the flux model that requires that each pair of amino acids has the same site-averaged flux as th empirical model (default, it may be disabled with the option `-noflux`), RAxML-NG internally normalizes the substitution rate at each site and `SSCPE.pl` undoes this normalization by providing as input the substitution rate computed by Prot_evol (default, it may be disabled with the option `-rate 0`). The empirical exchangeability matrix can be input (e.g. `-matrix JTT`) or it can be internally optimized by Prot_evol (default);
 
-(4) SSCPE.pl transforms the resulting substitution models in a format readable by the programs RAxML-NG (Kozlov et al. 2019 [5], https://github.com/amkozlov/raxml-ng) and PAML (Yang 2007 [6]).
+(4) `SSCPE.pl` transforms the resulting substitution models in a format readable by the programs RAxML-NG (Kozlov et al. 2019 [5], https://github.com/amkozlov/raxml-ng) and PAML (Yang 2007 [6]).
 
-Upon request (-raxml), RAxML-NG [2] can be run to infer the phylogenetic tree, if it is present in the same directory as SSCPE.pl. The executable of RAxML-NG must be downloaded from https://github.com/amkozlov/raxml-ng and stored in the same directory as SSCPE.pl under the name raxml-ng.
+Upon request (`-raxml`), RAxML-NG [2] can be run to infer the phylogenetic tree, if it is present in the same directory as `SSCPE.pl`. The executable of RAxML-NG must be downloaded from https://github.com/amkozlov/raxml-ng and stored in the same directory as SSCPE.pl under the name `raxml-ng`.
 
 ### References:
 1. Lorca I, Otero-de Navascues F, Arenas M and Bastolla U. 2022. Structure and stability constrained substitution models outperform traditional substitution models used for evolutionary inference. Submitted.  
@@ -53,6 +53,7 @@ Maximum likelihood phylogenetic inference with selection on protein folding stab
 7. Bastolla U. 2014. Detecting selection on protein stability through statistical mechanical models of folding and evolution. Biomolecules 4:291-31.  
 8. Echave J. 2008. Evolutionary divergence of protein structure: The linearly forced elastic network model. Chem Phys Lett 457, 413-416  
 9. Mendez R and Bastolla U. 2010. Torsional network model: normal modes in torsion angle space better correlate with conformation changes in proteins. Phys Rev Lett. 104:228103.  
+
 
 ## Usage:
 
@@ -101,7 +102,7 @@ It compares two phylogenetic trees by performing two-parameter fit of the corres
 
 ### master script `script_run_SSCPE_models.pl`
 
-For given MSA (input as -msa), list of PDB files (-pdblist) and folder where they are stored (-pdbdir), it runs a combination of several SSCPE models and empirical substitution models, which you can modify by editing the script, it generates one job for each model and submits the computations to a computing cluster (you should also modify the corresponding line `$run=...` as needed).  
+For given MSA (input as `-msa <>`), list of PDB files (`-pdblist <>`) and folder where they are stored (`-pdbdir`) or for an unique PDB file (`-pdb <>`, optionally `-chain <>`), it runs a combination of several SSCPE models and empirical substitution models, which you can modify by editing the script, it generates one job for each model and submits the computations to a computing cluster (you should also modify the corresponding line `$run=...` as needed).  
 
 For sending the computations to a queue system, the master script uses the provided PERL program `qsubmit.pl`.
 
