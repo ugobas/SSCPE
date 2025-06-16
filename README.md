@@ -30,17 +30,19 @@ you can copy them to your PATH for easier use.
 
 ## Description of the program SSCPE.pl
 
-For a given multiple sequence alignment (MSA) and list of protein structures (PDB file) whose sequences have local identity >50% with a sequence present in the MSA, the program `SSCPE.pl`:
+For one protein structure (PDB file input with the option -pdb <file>) or several structures (-pdblist <list> -pdbdir <folder>) and a multiple sequence alignment (-ali <MSA>, optional if there is only one PDB file) containing sequences homologous to the sequences of the pdb files, the program `SSCPE.pl`:
 
 (1) runs the program `Prot_evol` (also available at https://github.com/ugobas/Prot_evol [1,7,8]) for predicting site-specific amino acid frequencies based on selection on protein structure conservation as predicted by the `tnm` program [9] and protein folding stability against unfolding and misfolding [6,7] for an input list of PDB structures and an MSA.
 
-(2) Prot_evol internally runs the program `tnm` (Torsional Network Model [9], also available at https://github.com/ugobas/tnm) for predicting the structural deformation [8] (RMSD and energy barrier DE between the average structure of the wild-type and the mutant) that would be produced by each possible mutation. The results of these computations (<>.mut_RMSD.dat and <>.mut_DE.dat) are stored in the folder /TNM_DATA where they are looked for by `Prot_evol` and reused if present, unless the option `-noreuse2` is set. TNM computations are slow for proteins with >500 residues (about 1h for 1000 residues) and they can be disabled with the option `-nostr`, but in this case the structure-constrained models RMSD and DE and the combined models RMSDWT, RMSDMF, DEWT, DEMF cannot be used;
+(2) Prot_evol internally runs the program `tnm` (Torsional Network Model [9], also available at https://github.com/ugobas/tnm) for predicting the structural deformation [8] (RMSD and energy barrier DE between the average structure of the wild-type and the mutant) that would be produced by each possible mutation. The results of these computations (<>.mut_RMSD.dat and <>.mut_DE.dat) are stored in the folder /TNM_DATA where they are looked for by `Prot_evol` and reused if present, unless the option `-noreuse2` is set. TNM computations are slow for proteins with >500 residues (about 1h for 1000 residues) and they can be disabled with the option `-nostr`, but in this case the structure-constrained models RMSD and DE and the combined models RMSDWT, RMSDMF, DEWT, DEMF cannot be used; In case of multiple PDB structures, the TNM computations are run using a maximum of 20 structures;
 
-(3) There are 3 possible binary options for the exchangeability matrix, amounting to 8 combinations: the Halpern-Bruno model of the fixation probability (default, it may be disabled with `-noHB`), the flux model that requires that each pair of amino acids has the same site-averaged flux as th empirical model (default, it may be disabled with the option `-noflux`), RAxML-NG internally normalizes the substitution rate at each site and `SSCPE.pl` undoes this normalization by providing as input the substitution rate computed by Prot_evol (default, it may be disabled with the option `-rate 0`). The empirical exchangeability matrix can be input (e.g. `-matrix JTT`) or it can be internally optimized by Prot_evol (default);
+For each of the 8 SSCPE models, Prot_evol prints the site-specific amino acid frequencies in the files named <PDB>.SSCPE.<MODEL>.AA_profiles.txt and it computes 8 exchangeability matrices for each model and each site, but it does not print them. The matrices are printed by SSCPE.pl
 
-(4) `SSCPE.pl` transforms the resulting substitution models in a format readable by the programs RAxML-NG (Kozlov et al. 2019 [5], https://github.com/amkozlov/raxml-ng) and PAML (Yang 2007 [6]).
+(3) There are 3 possible binary options for the exchangeability matrix, amounting to 8 combinations: the Halpern-Bruno model of the fixation probability (default, it may be disabled with `-noHB`), the flux model that requires that each pair of amino acids has the same site-averaged flux as th empirical model (default, it may be disabled with the option `-noflux`). Since RAxML-NG internally normalizes the substitution rate at each site, `SSCPE.pl` undoes this normalization by providing as input the substitution rate computed by Prot_evol (default, it may be disabled with the option `-rate 0`). The empirical exchangeability matrix can be input (e.g. `-matrix JTT`) or it can be internally optimized by Prot_evol (default);
 
-Upon request (`-raxml`), RAxML-NG [2] can be run to infer the phylogenetic tree, if it is present in the same directory as `SSCPE.pl`. The executable of RAxML-NG must be downloaded from https://github.com/amkozlov/raxml-ng and stored in the same directory as SSCPE.pl under the name `raxml-ng`.
+(4) `SSCPE.pl` prints the resulting exchangeability matrices (one per site) and the partition scheme (which matrix is associated to which site) in a format readable by the programs RAxML-NG (Kozlov et al. 2019 [5], https://github.com/amkozlov/raxml-ng) and PAML (Yang 2007 [6]). The matrices are printed if `SSCPE.pl` is specified with the option `-print_exch` or with the option `-raxml`, in this case RAxML-NG is run and the exchangeability matrices are deleted at the end unless the option `-noclean` is specified.
+
+Upon request (`-raxml`), RAxML-NG [2] can be run to infer the phylogenetic tree, if it is present in the same directory as `SSCPE.pl`. The executable of RAxML-NG must be downloaded from https://github.com/amkozlov/raxml-ng and stored in the same directory as SSCPE.pl under the name `raxml-ng`. You can also specify `-evaluate -tree <TREE>`, in which case RAxML will not infer the ML tree but it will infer the branch lengths and the likelihood of the input tree <TREE>.
 
 ### References:
 1. Lorca I, Otero-de Navascues F, Arenas M and Bastolla U. 2022. Structure and stability constrained substitution models outperform traditional substitution models used for evolutionary inference. Submitted.  
@@ -54,7 +56,6 @@ Maximum likelihood phylogenetic inference with selection on protein folding stab
 8. Echave J. 2008. Evolutionary divergence of protein structure: The linearly forced elastic network model. Chem Phys Lett 457, 413-416  
 9. Mendez R and Bastolla U. 2010. Torsional network model: normal modes in torsion angle space better correlate with conformation changes in proteins. Phys Rev Lett. 104:228103.  
 
-
 ## Usage:
 
 ```sh
@@ -65,14 +66,17 @@ SSCPE.pl
 	 -chain <single PDB chain> (default: first chain)  
 	 -pdbdir <path to PDB> (if the PDB file is not in current folder)  
 	 -model <MOD> (allowed: MF WT DE RMSD DEWT RMSDWT DEMF RMSDMF)  
-	 -raxml ! infer ML tree running RAxML-NG  
+	 -raxml ! infer ML tree running RAxML-NG
+	 -evaluate ! Compute with RAxML-NG branch lengths for given tree
+	 -tree  <tree to be evaluated>
+	 -print_exch ! Prints and does not delete exchangeability matrices
 	 -index <index of output files (optional)>  
 	 -nostr  (Do not run TNM if its results do not exist)  
 	 -noreuse  (Do not reuse Prot_evol results even if exist)  
 	 -noreuse2 (Do not reuse Prot_evol & TNM results even if exist)  
 	 -option <one line file with other RAxML options> (optional)  
 	 -thread (number of processors used by RAxML-NG, default 4)  
-	 -noclean (Do not clean RAxML partitions after use)  
+	 -noclean (Do not clean RAxML partitions after use)
 
 	 Options fot the exchangeability matrix:  
 	 -matrix <global subst. matrix: LG WAG JTT OPT (default OPT)>  
