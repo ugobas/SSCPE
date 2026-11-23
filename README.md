@@ -16,7 +16,6 @@ Run the following:
 ```sh  
 cd SSCPE  
 cd SOURCE   
-unzip SSCPE.zip  
 chmod u+x script_install_SSCPE.sh  
 ./script_install_SSCPE.sh  
 ```  
