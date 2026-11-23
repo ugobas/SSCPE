@@ -22,10 +22,15 @@ chmod u+x script_install_SSCPE.sh
 The installation script script_install_SSCPE.sh compiles the programs tnm and Prot_evol, stores the executables in the current folder and modifies the paths of the programs and the input files in SSCPE.pl as needed. The program raxml-ng included in the package is also extracted to the current folder, but it is recommended that you downloead it again from the official site.
 
 The installation program generates the following executables:  
+
 SSCPE/SOURCE/SSCPE.pl
+
 SSCPE/SOURCE/Prot_evol
+
 SSCPE/SOURCE/tnm
+
 SSCPE/SOURCE/raxml-ng
+
 you can copy them to your PATH for easier use.
 
 ## Description of the program SSCPE.pl
