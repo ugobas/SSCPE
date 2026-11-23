@@ -9,23 +9,24 @@ The ML trees may be inferred upon request through the program RAxML-NG (Kozlov e
 ## Installation: 
 
 You have to run the following on your computer:  
-Download SSCPE.zip from  https://github.com/ugobas/SSCPE/SSCPE.zip  
-It is recommended to download SSCPE.zip in an empty folder called SSCPE  
+git clone https://github.com/ugobas/SSCPE.git  
+This will create a folder called SSCPE  
 Run the following:  
 
 ```sh  
-mkdir SSCPE  
-mv SSCPE.zip SSCPE  
 cd SSCPE  
+cd SOURCE   
 unzip SSCPE.zip  
 chmod u+x script_install_SSCPE.sh  
 ./script_install_SSCPE.sh  
 ```  
-
 The installation script script_install_SSCPE.sh compiles the programs tnm and Prot_evol, stores the executables in the current folder and modifies the paths of the programs and the input files in SSCPE.pl as needed. The program raxml-ng included in the package is also extracted to the current folder, but it is recommended that you downloead it again from the official site.
 
 The installation program generates the following executables:  
-SSCPE/SSCPE.pl SSCPE/Prot_evol SSCPE/tnm SSCPE/raxml-ng
+SSCPE/SOURCE/SSCPE.pl
+SSCPE/SOURCE/Prot_evol
+SSCPE/SOURCE/tnm
+SSCPE/SOURCE/raxml-ng
 you can copy them to your PATH for easier use.
 
 ## Description of the program SSCPE.pl
