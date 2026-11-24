@@ -29,7 +29,10 @@ while (my $row = <$fh>){
 	    print $fo "char tnm_mut_para[]=\"$maindir/Mut_para.in\";\n";
 	    $written++; next;
 	}elsif(substr($row, 0, 12) eq "char DIR_TNM"){
-	    print $fo "char DIR_TNM[]=\"$maindir/TNM_DATA\";\n";
+	    my $TNM_DATA=$maindir."/TNM_DATA";
+	    print $fo "char DIR_TNM[]=\"$TNM_DATA\";\n";
+	    `mkdir $TNM_DATA`;
+	    print "mkdir $TNM_DATA\n";
 	    $written++; next;
 	}
     }

@@ -1,20 +1,20 @@
 #!/bin/sh
 
-unzip *.zip
+#unzip *.zip
 
-PROG="SSCPE.pl"
-
-RAXML="raxml-ng"
-chmod u+x $RAXML
-
-echo "Directory where $PROG is installed: "
 pwd
 MAIN=$PWD
 
+RAXML="raxml-ng"
+chmod u+x $RAXML
+echo "Directory where $RAXML is installed: $MAIN"
+
+PROG="SSCPE.pl"
+echo "Directory where $PROG is installed: $MAIN"
+
 # Compile the TNM program
 DIR="DIR_TNM"
-echo "Compiling tnm in folder $DIR and moving to "
-pwd
+echo "Compiling tnm in folder $DIR and moving to $MAIN"
 rm -rf $DIR
 mkdir $DIR
 cp -f tnm.zip $DIR
@@ -35,8 +35,9 @@ mkdir $DIR
 cp Prot_evol.zip $DIR
 cp script_dir_Prot_evol.pl $DIR
 cd $DIR
-unzip Prot_evol.zip
 chmod u+x script_dir_Prot_evol.pl
+unzip Prot_evol.zip
+echo "Running script_dir_Prot_evol.pl"
 ./script_dir_Prot_evol.pl
 make
 mv -f Prot_evol ../
